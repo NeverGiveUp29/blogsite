@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">编辑靓号</h3>
+            </div>
+            <div class="panel-body">
+         <!--添加表单-->
+            <form method="post" novalidate><!--post提交表单,novalidate是去掉浏览器的校验-->
+                {% csrf_token %}<!--隐藏框，django自带的安全校验，不添加会报错-->
+                {% for filed in form %}
+                    <label>{{ filed.label }}</label>
+                    {{ filed }}
+                    <!--如果提交数据格式不对，需要显示错误信息，是一个列表，只需要取第一个即可-->
+                    <span style="color: red;">{{ filed.errors.0 }}</span><br/>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+        </div>
+    </div>
+{% endblock %}

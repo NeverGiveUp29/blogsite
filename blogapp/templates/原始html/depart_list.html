@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>部门列表</title>
+    <!--一、导入bootstrap的css样式-->
+    <link rel="stylesheet" type="text/css" href="{%  static '/plugins/bootstrap-3.4.1/dist/css/bootstrap.min.css'%}">
+
+    <!-- 二、下面从bootstap操作手册复制导航栏代码过来用 -->
+    <!--1.去掉圆角-->
+    <style>
+        .navbar{
+            border-radius: 0;
+        }
+    </style>
+    <!-- 三、导入jquery和bootstrap的js文件-->
+{#    <script src="/blogapp/static/js/jquery-3.6.0.min.js"></script>#}
+    <script src="{%  static '/js/jquery-3.6.0.min.js'%}"></script>
+{#    <script src="/blogapp/static/plugins/bootstrap-3.4.1/dist/js/bootstrap.min.js"></script>#}
+    <script src="{% static '/plugins/bootstrap-3.4.1/dist/js/bootstrap.min.js' %}"></script>
+
+</head>
+
+<body>
+<!--2.去掉其他没必要的tab（Link）页，如下拉框，查询和提交按钮 -->
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">联通用户列表</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">联通用户列表</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+          <!--2.1 第一个Link和第三个(下拉)li删除，留下一个Link就行了-->
+        <li><a href="/depart/list/">部门管理</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+        <!--2.2 form的输入框删掉-->
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">登录</a></li><!--后续需要判断用户是否已登录，未登录显示成登录按钮；已登录显示为用户名。先保留-->
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">陈某人 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">个人资料</a></li>
+            <li><a href="#">我的信息</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">注销</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div>
+    <div class="container">
+    <!--按钮区域-->
+        <div style="margin-bottom: 10px"><!--按钮距离下方10像素-->
+            <a class="btn btn-success" href="/depart/add/" ><!--btn-success是绿色按钮-->
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><!--新增图标-->
+                新建部门
+            </a>
+        </div>
+
+    <!--表格区域-->
+         <div class="panel panel-default">
+         <!-- 列表标题 -->
+          <div class="panel-heading">
+              <span class="glyphicon glyphicon-list" aria-hidden="true"></span><!--列表名称的图标-->
+              部门列表
+          </div>
+          <!-- 列表内容 -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>名称</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody><!--关联数据库，获取的部门信息，循环遍历填写到表单里-->
+            {% for departInfo in queryset %}
+              <tr>
+                <th scope="row">{{ departInfo.id }}</th><!--部门id-->
+                <td>{{ departInfo.title }}</td><!--部门名称-->
+                <td>
+                    <a class="btn btn-primary btn-xs" href="/depart/{{ departInfo.id }}/edit/">编辑</a>
+                    <a class="btn btn-danger btn-xs" href="/depart/delete/?nid={{departInfo.id}}">删除</a><!--红色按钮,btn-xs按钮变小点-->
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,135 @@
+{% extends 'layout.html' %}
+{% block  content%}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">表单</div>
+            <div class="panel-body">
+                <form id="formAdd"  >
+                    <div class="clearfix">
+                    {% for filed in form %}
+                        <div class="col-xs-6">
+                        <!--这里和下面错误信息的span元素添加position属性是为了避免错误提示只有一两个时打乱布局-->
+                            <div class="form-group" style="position: relative;margin-bottom: 20px">
+                                <label>{{ filed.label }}</label>
+                                {{ filed }}
+                                <span class="error_msg" style="color: red;position: absolute"></span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+
+                <div class="col-xs-12">
+                    <button id="btnAdd" type="button" class="btn btn-primary">提交</button>
+                </div>
+
+            </form>
+            </div>
+        </div>
+
+        <hr/>
+        <h1>Ajax学习</h1>
+        <h3>示例1</h3>
+        <input  id="btn1" type="button" class="btn btn-primary" value="点击1" />
+        <h3>示例2-提交数据</h3>
+        <input id="txtUser" type="text"  placeholder="姓名" />
+        <input id="txtAge" type="text"  placeholder="年龄" />
+        <input  id="btn2" type="button" class="btn btn-primary" value="点击2" />
+        <h3>示例3-提交很多数据</h3>
+        <form id="form3">
+            <!-- 很多表单数据时，可以用form打包提取数据，下面的input元素必须有name属性，可以不用再要id-->
+            <input name="txtUser" type="text"  placeholder="姓名" />
+            <input name="txtAge" type="text"  placeholder="年龄" />
+            <input name="txtEmail" type="text"  placeholder="邮箱" />
+            <input name=txtMore" type="text"  placeholder="介绍" />
+            <input  id="btn3" type="button" class="btn btn-primary" value="点击3" />
+        </form>
+    </div>
+{%endblock%}
+
+{% block js %}
+    <script type="text/javascript">
+        $(function () {
+            // 页面框架加载完成之后代码自动执行【基于jquery来绑定事件】
+            bindBtn1Event();
+            bindBtn2Event();
+            bindBtn3Event();
+            bindBtnAddEvent();
+        });
+
+        function bindBtn1Event() {
+            $("#btn1").click(function () {
+                $.ajax({
+                url:'/task/ajax/',
+                type:'post',
+                dataType:'JSON',
+                data:{
+                    n1:123,
+                    n2:456
+                    },
+                success:function (res) {
+                    console.log(res.data);
+                    }
+                })
+            })
+        }
+
+        // 通过jquery根据id获取输入框的用户名值：$("#txtUser").val()
+        function bindBtn2Event() {
+            $("#btn2").click(function () {
+                $.ajax({
+                url:'/task/ajax/',
+                type:'post',
+                dataType:'JSON',
+                data:{
+                    name:$("#txtUser").val(),
+                    age:$("#txtAge").val()
+                    },
+                success:function (res) {
+                    console.log(res);
+                    console.log(res.status);
+                    console.log(res.data);
+                    }
+                })
+            })
+        }
+        function bindBtn3Event() {
+            $("#btn3").click(function () {
+                $.ajax({
+                url:'/task/ajax/',
+                type:'post',
+                dataType:'JSON',
+                data:$("#form3").serialize(),
+                success:function (res) {
+                    console.log(res);
+                    console.log(res.status);
+                    console.log(res.data);
+                    }
+                })
+            })
+        }
+        function bindBtnAddEvent() {
+            $("#btnAdd").click(function () {
+                // 清空错误信息
+                $(".error_msg").empty();
+                $.ajax({
+                url:'/task/add/',
+                type:'post',
+                dataType:'JSON',
+                data:$("#formAdd").serialize(),
+                success:function (res) {
+                    if(res.status){
+                        alert("添加成功")
+                    } else {
+                        $.each(res.error,function(name,data){
+                            console.log(name,data);
+                            // 根据输入框的id，定位到它的下一级元素，展示为错误信息
+                            $("#id_"+name).next().text(data[0]);
+                        })
+                    }
+                    }
+                })
+            })
+        }
+    </script>
+{% endblock %}
+

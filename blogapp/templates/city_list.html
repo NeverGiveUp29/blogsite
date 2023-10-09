@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+    <!--按钮区域-->
+        <div style="margin-bottom: 10px"><!--按钮距离下方10像素-->
+            <a class="btn btn-success" href="/city/add/" >
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                新建城市
+            </a>
+        </div>
+
+    <!--表格区域-->
+         <div class="panel panel-default">
+         <!-- 列表标题 -->
+          <div class="panel-heading">
+              <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+              城市列表
+          </div>
+          <!-- 列表内容 -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>城市名称</th>
+                <th>Logo</th>
+                <th>人口</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for obj in queryset %}
+              <tr>
+                <th scope="row">{{ obj.id }}</th>
+                <td>{{ obj.name }}</td>
+                <td>
+                    <img src="/media/{{ obj.img }}" style="height: 40px">
+                </td>
+                <td>{{ obj.count }}</td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+{% endblock %}
+

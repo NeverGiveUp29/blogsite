@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新建部门</title>
+    <link rel="stylesheet" type="text/css" href="{%  static '/plugins/bootstrap-3.4.1/dist/css/bootstrap.min.css'%}">
+    <style>
+        .navbar{
+            border-radius: 0;
+        }
+    </style>
+    <script src="{%  static '/js/jquery-3.6.0.min.js'%}"></script>
+    <script src="{% static '/plugins/bootstrap-3.4.1/dist/js/bootstrap.min.js' %}"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">联通用户列表</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">联通用户列表</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+          <!--2.1 第一个Link和第三个(下拉)li删除，留下一个Link就行了-->
+        <li><a href="/depart/list/">部门管理</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+        <!--2.2 form的输入框删掉-->
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">登录</a></li><!--后续需要判断用户是否已登录，未登录显示成登录按钮；已登录显示为用户名。先保留-->
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">陈某人 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">个人资料</a></li>
+            <li><a href="#">我的信息</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">注销</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div>
+    <div class="container">
+        <!--添加带标题的面板-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">新建部门</h3>
+            </div>
+            <div class="panel-body">
+         <!--添加表单-->
+            <form method="post"><!--post提交表单-->
+                {% csrf_token %}<!--隐藏框，django自带的安全校验，不添加会报错-->
+                <div class="form-group">
+                    <label for="inputDepartTitle">部门名称</label>
+                    <input type="text" class="form-control"  placeholder="部门名称" name="title">
+                </div>
+                <button type="submit" class="btn btn-primary">提交</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

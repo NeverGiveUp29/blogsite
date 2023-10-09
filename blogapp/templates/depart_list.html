@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <!--批量上传按钮-->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                批量上传
+            </div>
+          <div class="panel-body">
+              <form method="post" enctype="multipart/form-data" action="/depart/upload/">
+                  <div class="form-group">
+                        {% csrf_token %}
+                        <input type="file" name="uploadFile">
+                  </div>
+                  <input type="submit" value="上传" class="btn btn-info btn-sm">
+              </form>
+          </div>
+        </div>
+    <!--按钮区域-->
+        <div style="margin-bottom: 10px"><!--按钮距离下方10像素-->
+            <a class="btn btn-success" href="/depart/add/" ><!--btn-success是绿色按钮-->
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><!--新增图标-->
+                新建部门
+            </a>
+        </div>
+
+    <!--表格区域-->
+         <div class="panel panel-default">
+         <!-- 列表标题 -->
+          <div class="panel-heading">
+              <span class="glyphicon glyphicon-list" aria-hidden="true"></span><!--列表名称的图标-->
+              部门列表
+          </div>
+          <!-- 列表内容 -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>名称</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody><!--关联数据库，获取的部门信息，循环遍历填写到表单里-->
+            {% for departInfo in queryset %}
+              <tr>
+                <th scope="row">{{ departInfo.id }}</th><!--部门id-->
+                <td>{{ departInfo.title }}</td><!--部门名称-->
+                <td>
+                    <a class="btn btn-primary btn-xs" href="/depart/{{ departInfo.id }}/edit/">编辑</a>
+                    <a class="btn btn-danger btn-xs" href="/depart/delete/?nid={{departInfo.id}}">删除</a><!--红色按钮,btn-xs按钮变小点-->
+                </td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </div>
+{% endblock %}
+
