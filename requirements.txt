@@ -12,7 +12,7 @@ filelock==3.9.0
 h11==0.14.0
 idna==3.3
 importlib-metadata==6.0.0
-mysqlclient @ file:///E:/download/mysqlclient-1.4.6-cp37-cp37m-win_amd64.whl
+mysqlclient==1.4.6
 openpyxl==3.1.2
 outcome==1.2.0
 Pillow==9.5.0
