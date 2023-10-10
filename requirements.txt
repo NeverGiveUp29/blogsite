@@ -8,16 +8,12 @@ distlib
 pytz==2022.1
 sqlparse==0.4.2
 Django==3.2.14
-et-xmlfile==1.1.0
 mysqlclient==1.4.6
 openpyxl==3.1.2
 Pillow==9.5.0
 requests==2.28.1
 selenium==4.9.1
 sortedcontainers==2.4.0
-trio==0.22.0
-trio-websocket==0.10.2
-typing_extensions==4.5.0
 urllib3==1.26.10
 virtualenv==20.20.0
 XlsxWriter==3.0.3
